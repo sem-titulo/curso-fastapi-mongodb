@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routes import notas
+from app.routes import notas, usuario
 
 app = FastAPI(
     title="Projeto bloco de notas",
@@ -8,4 +8,5 @@ app = FastAPI(
 )
 
 
+app.include_router(usuario.router)
 app.include_router(notas.router)
