@@ -1,5 +1,5 @@
 from typing import Optional
-from app.models.usuario import UsuarioModel
+from app.models.usuario import UsuarioModel, EditarUsuarioModel
 from app.services.usuario import UsuarioService
 from fastapi import APIRouter, HTTPException, status
 from fastapi.responses import JSONResponse
@@ -64,4 +64,64 @@ def listar_usuario(id: str):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={"error": "Nenhum usuário encontrado"}
+        )
+
+@router.put('/editar/{id}')
+def editar_usuario(id: str, data: EditarUsuarioModel):
+    try:
+        usuario = usuario_service.editar_usuario_put(id, data.dict())
+        if not usuario:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={"error": "Usuário não editado"}
+            )
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={"message": "Usuário editado com sucesso!"}
+        )
+    except Exception as e:
+        print(e)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={"error": "Usuário não editado"}
+        )
+
+@router.patch('/editar/{id}')
+def editar_usuario_patch(id: str, email: str):
+    try:
+        usuario = usuario_service.editar_usuario_patch(id, email)
+        if not usuario:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={"error": "Usuário não editado"}
+            )
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={"message": "Usuário editado com sucesso!"}
+        )
+    except Exception as e:
+        print(e)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={"error": "Usuário não editado"}
+        )
+
+@router.delete('/deletar/{id}')
+def deletar_usuario(id: str):
+    try:
+        usuario = usuario_service.deletar_usuario(id)
+        if not usuario:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={"error": "Usuário não deletado"}
+            )
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={"message": "Usuário deletado com sucesso!"}
+        )
+    except Exception as e:
+        print(e)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={"error": "Usuário não deletado"}
         )

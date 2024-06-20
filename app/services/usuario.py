@@ -24,3 +24,26 @@ class UsuarioService:
 
     def listar_usuario(self, id):
         return self.db_connection.find_one("usuarios", {"id": id}, {"_id": 0, "senha": 0})
+
+    def editar_usuario_put(self, id, data):
+        return self.db_connection.update_one(
+            "usuarios",
+            {"id": id},
+            {
+                "$set": data
+            }
+        )
+
+    def editar_usuario_patch(self, id, email):
+        return self.db_connection.update_one(
+            "usuarios",
+            {"id": id},
+            {
+                "$set": {
+                    "email": email
+                }
+            }
+        )
+
+    def deletar_usuario(self, id):
+        return self.db_connection.delete_one("usuarios", {"id": id})

@@ -10,3 +10,6 @@ class UsuarioModel(BaseModel):
         if not re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-_+]).+$", v):
             raise ValueError("A senha deve conter pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial")
         return v
+
+class EditarUsuarioModel(BaseModel):
+    email: EmailStr
