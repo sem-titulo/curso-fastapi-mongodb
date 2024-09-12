@@ -13,3 +13,8 @@ class UsuarioModel(BaseModel):
 
 class EditarUsuarioModel(BaseModel):
     email: EmailStr
+
+
+class LoginModel(BaseModel):
+    email: str
+    senha: str
