@@ -1,11 +1,17 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from database.database import DBConnection
+from utils.validador_rota import validador_rota
 
 router = APIRouter(
     prefix="/notas",
-    tags=["Notas"]
+    tags=["Notas"],
+    dependencies=[Depends(validador_rota)]
 )
 
+# router = APIRouter(
+#     tags=["Autenticação"],
+#       # Protege todas as rotas com autenticação
+# )
 db_connection = DBConnection()
 
 

@@ -1,5 +1,5 @@
 import re
-from pydantic import BaseModel, EmailStr, constr, validator
+from pydantic import BaseModel, EmailStr, constr, validator, Field
 
 class UsuarioModel(BaseModel):
     email: EmailStr
@@ -13,3 +13,8 @@ class UsuarioModel(BaseModel):
 
 class EditarUsuarioModel(BaseModel):
     email: EmailStr
+
+
+class LoginModel(BaseModel):
+    email: str = Field(examples=["example@teste.com"], title="Email do Usuário")
+    senha: str = Field(email="Teste@2021", title="Senha do Usuário")
