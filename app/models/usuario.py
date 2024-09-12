@@ -16,5 +16,5 @@ class EditarUsuarioModel(BaseModel):
 
 
 class LoginModel(BaseModel):
-    email: str = Field(examples=["example@teste.com"], title="Email do Usuário")
-    senha: str = Field(email="Teste@2021", title="Senha do Usuário")
+    email: str
+    senha: str

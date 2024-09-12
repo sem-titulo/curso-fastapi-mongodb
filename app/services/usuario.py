@@ -58,7 +58,6 @@ class UsuarioService:
                 {"_id": 0}
             )
             senha = base64.b64decode(usuario["senha"]).decode("ascii")
-
             if senha == data.senha:
                 usuario.pop("senha")
 
@@ -75,7 +74,6 @@ class UsuarioService:
                 return payload
             else:
                 return False
-
         except Exception as e:
             print(e)
             return False
@@ -90,4 +88,4 @@ class UsuarioService:
         if usuario:
             return {"info": usuario}
         else:
-            return {"info": usuario}
+            return False

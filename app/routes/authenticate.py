@@ -1,20 +1,21 @@
-# *-* Coding: UTF-8 *-*
 from typing import Optional
-
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from app.models.usuario import UsuarioModel, EditarUsuarioModel, LoginModel
+from app.services.usuario import UsuarioService
+from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
-from services.usuario import UsuarioService
-from models.usuario import LoginModel
-from utils.validador_rota import validador_rota
+from utils.validador_rota import  validador_rota
 
-router = APIRouter(tags=["Autenticação"])
+
+router = APIRouter(
+    tags=["Autenticação"]
+)
+
 
 usuario_service = UsuarioService()
 
-
 @router.post("/login")
-async def signin(data: LoginModel):
+def login(data: LoginModel):
     usuario = usuario_service.login(data)
     if not usuario:
         return JSONResponse(
@@ -28,9 +29,8 @@ async def signin(data: LoginModel):
         content=jsonable_encoder(usuario)
     )
 
-
 @router.get("/me")
-async def me(current_user=Depends(validador_rota)):
+def me(current_user=Depends(validador_rota)):
     usuario = usuario_service.decodificar_token(current_user)
     if not usuario:
         return JSONResponse(
