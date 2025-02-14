@@ -4,15 +4,14 @@ from app.services.usuario import UsuarioService
 from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
-from utils.validador_rota import  validador_rota
+from utils.validador_rota import validador_rota
 
 
-router = APIRouter(
-    tags=["Autenticação"]
-)
+router = APIRouter(tags=["Autenticação"])
 
 
 usuario_service = UsuarioService()
+
 
 @router.post("/login")
 def login(data: LoginModel):
@@ -20,14 +19,12 @@ def login(data: LoginModel):
     if not usuario:
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
-            content={
-                "error": "Erro de credenciais!"
-            },
+            content={"error": "Erro de credenciais!"},
         )
     return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content=jsonable_encoder(usuario)
+        status_code=status.HTTP_200_OK, content=jsonable_encoder(usuario)
     )
+
 
 @router.get("/me")
 def me(current_user=Depends(validador_rota)):
@@ -35,11 +32,8 @@ def me(current_user=Depends(validador_rota)):
     if not usuario:
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
-            content={
-                "error": "Usuário não autenticado!"
-            },
+            content={"error": "Usuário não autenticado!"},
         )
     return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content=jsonable_encoder(usuario)
+        status_code=status.HTTP_200_OK, content=jsonable_encoder(usuario)
     )

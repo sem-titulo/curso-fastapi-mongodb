@@ -8,7 +8,6 @@ class DBConnection:
         self.__client = MongoClient(MONGO_URL)
         self._connection = self.__client[MONGO_ENVIROMENT]
 
-
     def find_one(
         self, collection: str, query: dict, projection: dict = {"_id": 0}, **kwargs: any
     ) -> dict or bool:
@@ -77,16 +76,16 @@ class DBConnection:
         except Exception as error:
             return None
 
-    def delete_one(self, collection: str, query: dict) -> bool:
+    def delete_one(self, collection: str, query: dict) -> bool | None:
         try:
-            self._connection[collection].delete_one(query)
-            return True
+            result = self._connection[collection].delete_one(query)
+            return True if result.deleted_count > 0 else None
         except Exception as error:
             return None
 
-    def delete_many(self, collection: str, query: dict) -> bool:
+    def delete_many(self, collection: str, query: dict) -> bool | None:
         try:
-            self._connection[collection].delete_many(query)
-            return True
+            result = self._connection[collection].delete_many(query)
+            return True if result.deleted_count > 0 else None
         except Exception as error:
             return None
