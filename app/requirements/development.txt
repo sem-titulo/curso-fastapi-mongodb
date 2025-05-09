@@ -4,3 +4,4 @@ debugpy
 pymongo
 pyjwt
 pydantic[email]
+uvicorn[standard]
